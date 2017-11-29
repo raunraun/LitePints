@@ -44,12 +44,12 @@ $colWidth = floor(100/$numberOfTaps);
  <?php for($i=1; $i<=$numberOfTaps; $i++) { $val = ($taps[$i]['brewDate'] !="") ? "Brewed ".$taps[$i]['brewDate'] : "--"; ?>
  <td><span><?php echo $val; ?></span></td>
  <?php } ?>
-</tr><tr>
+</tr><tr class="glass">
  <?php for($i=1; $i<=$numberOfTaps; $i++) { 
          $container = ($taps[$i]['name'] != "") ? $taps[$i]['container'] : "standardpint&empty=yes";
   ?>
  <td>
-   <img width="100%" src="img/containerSvg.php?container=<?php echo $container; ?>&rgb=<?php echo $taps[$i]['rgb']; ?>" />
+   <img width="100%" height="100%" src="img/containerSvg.php?container=<?php echo $container; ?>&rgb=<?php echo $taps[$i]['rgb']; ?>" />
  </td>
  <?php } ?>
 </tr><tr>

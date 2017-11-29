@@ -11,13 +11,16 @@ $db = new SQLite3('db/db.db');
 if (isset($_POST['number'])) {
   $tapNo = $_POST['number'];
   $s = $db->prepare("update taps set 
-                       name=:name, style=:style, brewDate=:brewDate, og=:og,
+		       name=:name, fullsize=:fullsize, currentsize=:currentsize, 
+                       style=:style, brewDate=:brewDate, og=:og,
                        fg=:fg, srm=:srm, ibu=:ibu, container=:container,
                        servingSizeValue=:servingSizeValue,
                        servingSizeUnits=:servingSizeUnits, notes=:notes
                      where number=:number");
 
   $s->bindParam(':number', $tapNo);
+  $s->bindParam(':fullsize', $_POST['fullsize']);
+  $s->bindParam(':currentsize', $_POST['currentsize']);
   $s->bindParam(':name', $_POST['name']);
   $s->bindParam(':style', $_POST['style']);
   $s->bindParam(':brewDate', $_POST['brewDate']);
@@ -51,6 +54,8 @@ $tap = $r->fetchArray(SQLITE3_ASSOC);
 <table class="formTable">
  <tr><th>Number:</th><td><?php echo $tapNo; ?></td></tr>
  <tr><th>Name:</th><td><input typ="text" name="name" value="<?php echo $tap['name']; ?>" /></td></tr>
+ <tr><th>Full Size:</th><td><input typ="text" name="fullsize" value="<?php echo $tap['fullsize']; ?>" /></td></tr>
+ <tr><th>Current Size:</th><td><input typ="text" name="currentsize" value="<?php echo $tap['currentsize']; ?>" /></td></tr>
  <tr><th>Style:</th><td><input typ="text" name="style" value="<?php echo $tap['style']; ?>" /></td></tr>
  <tr><th>Brew Date:</th><td><input typ="text" name="brewDate" value="<?php echo $tap['brewDate']; ?>" /></td></tr>
  <tr><th>OG:</th><td><input typ="text" name="og" value="<?php echo $tap['og']; ?>" /></td></tr>

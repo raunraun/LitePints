@@ -17,11 +17,13 @@ $tapCount = $row['count(*)'];
 $r = $db->query("select * from taps order by number");
 ?>
 <table class="tapList">
- <tr><th>Number</th><th>Name</th><th>Style</th><th>Brew Date</th><th>OG</th><th>FG</th><th>SRM</th><th>IBU</th><th>Container</th><th>Serving Size</th></tr>
+ <tr><th>Number</th><th>Name</th><th>Full Size</th><th>Current Size</th><th>Style</th><th>Brew Date</th><th>OG</th><th>FG</th><th>SRM</th><th>IBU</th><th>Container</th><th>Serving Size</th></tr>
  <?php while ($tap = $r->fetchArray(SQLITE3_ASSOC)) { ?>
  <tr>
   <td><?php echo $tap['number']; ?></td>
   <td><?php echo $tap['name']; ?></td>
+  <td><?php echo $tap['fullsize']; ?></td>
+  <td><?php echo $tap['currentsize']; ?></td>
   <td><?php echo $tap['style']; ?></td>
   <td><?php echo $tap['brewDate']; ?></td>
   <td><?php echo $tap['og']; ?></td>
