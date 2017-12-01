@@ -6,18 +6,30 @@
 </head>
 <body>
 <?php
-$db = new SQLite3('db/db.db');
+
+require_once 'include/config.php';
 
 if (isset($_GET['number'])) {
   $tapNo = $_GET['number'];
-  $s=$db->prepare("insert into taps (number) values (:number)");
-  $s->bindParam(':number', $tapNo);
-  $r = $s->execute();
-  if ($r) {
-    header("Location: editTap.php?number=$tapNo");
-  } else {
-    echo "error adding!";
-  }
+   
+  $tap = array();
+  $tap['number'] = tapNo;
+  $tap['fullsize'] = 0;
+  $tap['currentsize'] = 0;
+  $tap['name'] = 0;
+  $tap['style'] = 0;
+  $tap['brewDate'] = 0;
+  $tap['og'] = 0;
+  $tap['fg'] = 0;
+  $tap['srm'] = 0;
+  $tap['ibu'] = 0;
+  $tap['container'] = 0;
+  $tap['servingSizeValue'] = 0;
+  $tap['servingSizeUnits'] = 0;
+  $tap['notes'] = '';
+  
+  $GLOBALS['taps'][$tapNo] = $tap;
+  save();
 }
 ?>
 </body>

@@ -6,8 +6,9 @@
 </head>
 <body>
 <?php
-$db = new SQLite3('db/db.db');
 
+/*
+$db = new SQLite3('db/db.db');
 if (isset($_GET['number'])) {
   $tapNo = $_GET['number'];
   $s=$db->prepare("update taps set 
@@ -31,7 +32,7 @@ if (isset($_GET['number'])) {
     echo "error updating";
   }
 }
-
+*/
 echo "error, must specify tap number";
 ?>
 </body>

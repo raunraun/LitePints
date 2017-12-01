@@ -6,14 +6,15 @@
 </head>
 <body>
 <?php
-$db = new SQLite3('db/db.db');
+
+require_once 'include/config.php';	
 
 if (isset($_GET['number'])) {
   $tapNo = $_GET['number'];
-  $s = $db->prepare("delete from taps where number=:number");
-  $s->bindParam(':number', $tapNo);
-  $r = $s->execute();
-  if ($r) {
+
+  array_splice($GLOBALS['taps'], $tapNo, 1);
+  
+  if (save()) {
     header("Location: showTaps.php");
   } else {
     echo "error deleting!";

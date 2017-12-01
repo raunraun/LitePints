@@ -6,19 +6,16 @@
 </head>
 <body>
 <?php
-$taps = array();
 
-$db = new SQLite3('db/db.db');
+require_once 'include/config.php';
 
-$r = $db->query("select count(*) from taps");
-$row = $r->fetchArray(SQLITE3_ASSOC);
-$tapCount = $row['count(*)'];
+$taps = $GLOBALS['taps'];
+$tapCount = sizeof($taps);
 
-$r = $db->query("select * from taps order by number");
 ?>
 <table class="tapList">
  <tr><th>Number</th><th>Name</th><th>Full Size</th><th>Current Size</th><th>Style</th><th>Brew Date</th><th>OG</th><th>FG</th><th>SRM</th><th>IBU</th><th>Container</th><th>Serving Size</th></tr>
- <?php while ($tap = $r->fetchArray(SQLITE3_ASSOC)) { ?>
+ <?php foreach($taps as $tap) { ?>
  <tr>
   <td><?php echo $tap['number']; ?></td>
   <td><?php echo $tap['name']; ?></td>

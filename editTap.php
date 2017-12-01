@@ -6,36 +6,33 @@
 </head>
 <body>
 <?php
-$db = new SQLite3('db/db.db');
+
+require_once 'include/config.php';
+
+$taps = $GLOBALS['taps'];
 
 if (isset($_POST['number'])) {
   $tapNo = $_POST['number'];
-  $s = $db->prepare("update taps set 
-		       name=:name, fullsize=:fullsize, currentsize=:currentsize, 
-                       style=:style, brewDate=:brewDate, og=:og,
-                       fg=:fg, srm=:srm, ibu=:ibu, container=:container,
-                       servingSizeValue=:servingSizeValue,
-                       servingSizeUnits=:servingSizeUnits, notes=:notes
-                     where number=:number");
 
-  $s->bindParam(':number', $tapNo);
-  $s->bindParam(':fullsize', $_POST['fullsize']);
-  $s->bindParam(':currentsize', $_POST['currentsize']);
-  $s->bindParam(':name', $_POST['name']);
-  $s->bindParam(':style', $_POST['style']);
-  $s->bindParam(':brewDate', $_POST['brewDate']);
-  $s->bindParam(':og', $_POST['og']);
-  $s->bindParam(':fg', $_POST['fg']);
-  $s->bindParam(':srm', $_POST['srm']);
-  $s->bindParam(':ibu', $_POST['ibu']);
-  $s->bindParam(':container', $_POST['container']);
-  $s->bindParam(':servingSizeValue', $_POST['servingSizeValue']);
-  $s->bindParam(':servingSizeUnits', $_POST['servingSizeUnits']);
-  $s->bindParam(':notes', $_POST['notes']);
- 
-  $r = $s->execute();
+  $tap = $taps[$tapNo];
+  $tap['fullsize'] = $_POST['fullsize'];
+  $tap['currentsize'] = $_POST['currentsize'];
+  $tap['name'] = $_POST['name'];
+  $tap['style'] = $_POST['style'];
+  $tap['brewDate'] = $_POST['brewDate'];
+  $tap['og'] = $_POST['og'];
+  $tap['fg'] = $_POST['fg'];
+  $tap['srm'] = $_POST['srm'];
+  $tap['ibu'] = $_POST['ibu'];
+  $tap['container'] = $_POST['container'];
+  $tap['servingSizeValue'] = $_POST['servingSizeValue'];
+  $tap['servingSizeUnits'] = $_POST['servingSizeUnits'];
+  $tap['notes'] = $_POST['notes'];
+  $taps[$tapNo] = $tap;
 
-  if ($r) {
+  $GLOBALS['taps'] = $taps;
+  
+  if (save()) {
     echo "updated!";
   } else {
     echo "error updating!";
@@ -43,10 +40,7 @@ if (isset($_POST['number'])) {
 }
 
 $tapNo = $tapNo ? $tapNo : $_GET['number'];
-$s = $db->prepare("select * from taps where number = :number");
-$s->bindParam(':number', $tapNo);
-$r = $s->execute();
-$tap = $r->fetchArray(SQLITE3_ASSOC);
+$tap = $taps[$tapNo];
 ?>
 
 <a class="button" href="showTaps.php">Back to tap list</a>
